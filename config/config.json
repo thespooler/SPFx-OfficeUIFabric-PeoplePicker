@@ -12,7 +12,8 @@
     }
   },
   "localizedResources": {
-    "officeUiFabricPeoplePickerStrings": "lib/webparts/officeUiFabricPeoplePicker/loc/{locale}.js"
+    "OfficeUiFabricPeoplePickerStrings": "lib/loc/{locale}.js",
+    "OfficeUiFabricPeoplePickerWebPartStrings": "lib/webparts/officeUiFabricPeoplePicker/loc/{locale}.js"
   },
   "externals": {}
 }

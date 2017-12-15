@@ -1,4 +1,4 @@
-declare interface IOfficeUiFabricPeoplePickerStrings {
+declare interface IOfficeUiFabricPeoplePickerWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
   DescriptionFieldLabel: string;
@@ -8,12 +8,9 @@ declare interface IOfficeUiFabricPeoplePickerStrings {
   principalTypeSecurityGroupLabel: string;
   principalTypeDistributionListLabel: string;
   numberOfItemsFieldLabel: string;
-  suggestions: string;
-  noResults: string;
-  loading: string;
 }
 
-declare module 'officeUiFabricPeoplePickerStrings' {
-  const strings: IOfficeUiFabricPeoplePickerStrings;
+declare module 'OfficeUiFabricPeoplePickerWebPartStrings' {
+  const strings: IOfficeUiFabricPeoplePickerWebPartStrings;
   export = strings;
 }

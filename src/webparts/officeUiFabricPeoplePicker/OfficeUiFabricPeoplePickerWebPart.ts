@@ -9,9 +9,9 @@ import {
   PropertyPaneSlider
 } from '@microsoft/sp-webpart-base';
 
-import * as strings from 'officeUiFabricPeoplePickerStrings';
-import OfficeUiFabricPeoplePicker from './components/OfficeUiFabricPeoplePicker';
-import { IOfficeUiFabricPeoplePickerProps } from './components/IOfficeUiFabricPeoplePickerProps';
+import * as strings from 'OfficeUiFabricPeoplePickerWebPartStrings';
+import { OfficeUiFabricPeoplePicker } from '../../controls/OfficeUiFabricPeoplePicker/index';
+import { IOfficeUiFabricPeoplePickerProps } from '../../controls/OfficeUiFabricPeoplePicker/index';
 import { IOfficeUiFabricPeoplePickerWebPartProps } from './IOfficeUiFabricPeoplePickerWebPartProps';
 
 export default class OfficeUiFabricPeoplePickerWebPart extends BaseClientSideWebPart<IOfficeUiFabricPeoplePickerWebPartProps> {

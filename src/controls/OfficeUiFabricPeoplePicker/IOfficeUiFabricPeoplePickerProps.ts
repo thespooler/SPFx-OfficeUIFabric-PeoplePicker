@@ -1,5 +1,5 @@
 import { SPHttpClient } from '@microsoft/sp-http';
-import { SharePointUserPersona } from '../models/OfficeUiFabricPeoplePicker';
+import { SharePointUserPersona } from '../../index';
 
 export interface IOfficeUiFabricPeoplePickerProps {
   description: string;

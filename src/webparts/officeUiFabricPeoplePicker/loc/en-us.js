@@ -9,8 +9,5 @@ define([], function() {
     "principalTypeSecurityGroupLabel": "Security Groups",
     "principalTypeDistributionListLabel": "Distribution List",
     "numberOfItemsFieldLabel": "Number of items to show",
-    "suggestions": "Suggested People",
-    "noResults": "No results",
-    "loading": "Loading"
   }
 });

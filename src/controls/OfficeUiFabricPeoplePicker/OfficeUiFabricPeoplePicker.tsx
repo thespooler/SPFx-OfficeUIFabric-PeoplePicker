@@ -10,7 +10,6 @@ import {
   assign,
   autobind
 } from 'office-ui-fabric-react/lib/Utilities';
-import { people } from './PeoplePickerExampleData';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { 
   SPHttpClient, 
@@ -26,9 +25,10 @@ import {
   IEnsurableSharePointUser,
   IEnsureUser, 
   IOfficeUiFabricPeoplePickerState, 
-  SharePointUserPersona } from '../models/OfficeUiFabricPeoplePicker';
-import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.types';
-import * as strings from 'officeUiFabricPeoplePickerStrings';
+  SharePointUserPersona } from '../../index';
+import * as strings from 'OfficeUiFabricPeoplePickerStrings';
+import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.Props';
+import { people } from '../../webparts/officeUiFabricPeoplePicker/PeoplePickerExampleData';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: strings.suggestions,
@@ -36,7 +36,7 @@ const suggestionProps: IBasePickerSuggestionsProps = {
   loadingText: strings.loading
 };
 
-export default class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricPeoplePickerProps, IOfficeUiFabricPeoplePickerState> {
+export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricPeoplePickerProps, IOfficeUiFabricPeoplePickerState> {
   private _peopleList;
   private contextualMenuItems: IContextualMenuItem[] = [
     {
@@ -70,19 +70,11 @@ export default class OfficeUiFabricPeoplePicker extends React.Component<IOfficeU
   constructor() {
     super();
     this._peopleList = [];
-    people.forEach((persona: IPersonaProps) => {
-      let target: IPersonaWithMenu = {};
-
-      assign(target, persona, { menuItems: this.contextualMenuItems });
-      this._peopleList.push(target);
-    });
-
     this.state = {
       currentPicker: 1,
       delayResults: false,
       selectedItems: []
     };
-    
   }
 
   public render(): React.ReactElement<IOfficeUiFabricPeoplePickerProps> {
@@ -137,40 +129,7 @@ export default class OfficeUiFabricPeoplePicker extends React.Component<IOfficeU
    * Returns fake people results for the Mock mode
    */
   private searchPeopleFromMock(): IPersonaProps[] {
-    return this._peopleList = [
-      {
-        imageUrl: './images/persona-female.png',
-        imageInitials: 'PV',
-        primaryText: 'Annie Lindqvist',
-        secondaryText: 'Designer',
-        tertiaryText: 'In a meeting',
-        optionalText: 'Available at 4:00pm'
-      },
-      {
-        imageUrl: './images/persona-male.png',
-        imageInitials: 'AR',
-        primaryText: 'Aaron Reid',
-        secondaryText: 'Designer',
-        tertiaryText: 'In a meeting',
-        optionalText: 'Available at 4:00pm'
-      },
-      {
-        imageUrl: './images/persona-male.png',
-        imageInitials: 'AL',
-        primaryText: 'Alex Lundberg',
-        secondaryText: 'Software Developer',
-        tertiaryText: 'In a meeting',
-        optionalText: 'Available at 4:00pm'
-      },
-      {
-        imageUrl: './images/persona-male.png',
-        imageInitials: 'RK',
-        primaryText: 'Roko Kolar',
-        secondaryText: 'Financial Analyst',
-        tertiaryText: 'In a meeting',
-        optionalText: 'Available at 4:00pm'
-      },
-    ];
+    return this._peopleList = people;
   }
 
   /**
