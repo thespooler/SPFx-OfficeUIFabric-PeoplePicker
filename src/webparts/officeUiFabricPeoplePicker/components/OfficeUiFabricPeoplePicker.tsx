@@ -20,7 +20,6 @@ import {
   Environment, 
   EnvironmentType
 } from '@microsoft/sp-core-library';
-import { Promise } from 'es6-promise';
 import  * as lodash from 'lodash';
 import { 
   IClientPeoplePickerSearchUser, 
@@ -29,11 +28,12 @@ import {
   IOfficeUiFabricPeoplePickerState, 
   SharePointUserPersona } from '../models/OfficeUiFabricPeoplePicker';
 import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.types';
+import * as strings from 'officeUiFabricPeoplePickerStrings';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
-  suggestionsHeaderText: 'Suggested People',
-  noResultsFoundText: 'No results found',
-  loadingText: 'Loading'
+  suggestionsHeaderText: strings.suggestions,
+  noResultsFoundText: strings.noResults,
+  loadingText: strings.loading
 };
 
 export default class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricPeoplePickerProps, IOfficeUiFabricPeoplePickerState> {

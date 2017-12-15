@@ -8,6 +8,9 @@ declare interface IOfficeUiFabricPeoplePickerStrings {
   principalTypeSecurityGroupLabel: string;
   principalTypeDistributionListLabel: string;
   numberOfItemsFieldLabel: string;
+  suggestions: string;
+  noResults: string;
+  loading: string;
 }
 
 declare module 'officeUiFabricPeoplePickerStrings' {

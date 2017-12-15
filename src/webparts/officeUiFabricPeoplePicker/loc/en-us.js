@@ -8,6 +8,9 @@ define([], function() {
     "principalTypeSharePointGroupLabel": "SharePoint Groups",
     "principalTypeSecurityGroupLabel": "Security Groups",
     "principalTypeDistributionListLabel": "Distribution List",
-    "numberOfItemsFieldLabel": "Number of items to show"
+    "numberOfItemsFieldLabel": "Number of items to show",
+    "suggestions": "Suggested People",
+    "noResults": "No results",
+    "loading": "Loading"
   }
 });
