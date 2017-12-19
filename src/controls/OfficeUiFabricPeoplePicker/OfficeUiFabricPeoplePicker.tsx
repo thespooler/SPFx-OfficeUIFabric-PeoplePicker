@@ -25,7 +25,7 @@ import {
   IEnsurableSharePointUser,
   IEnsureUser, 
   IOfficeUiFabricPeoplePickerState, 
-  SharePointUserPersona } from '../../index';
+  SharePointUserPersona } from './OfficeUiFabricPeoplePickerModels';
 import * as strings from 'OfficeUiFabricPeoplePickerStrings';
 import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.Props';
 import { people } from '../../webparts/officeUiFabricPeoplePicker/PeoplePickerExampleData';
