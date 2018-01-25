@@ -7,9 +7,9 @@
     "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "lib": ["es6", "dom"],
     "types": [
-      "es6-promise",
-      "es6-collections",
       "webpack-env"
     ]
   }

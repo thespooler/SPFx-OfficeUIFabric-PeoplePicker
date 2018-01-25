@@ -67,8 +67,8 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
       disabled: true
     }
   ];
-  constructor() {
-    super();
+  constructor(props:IOfficeUiFabricPeoplePickerProps, context?: any) {
+    super(props, context);
     this._peopleList = [];
     this.state = {
       currentPicker: 1,
