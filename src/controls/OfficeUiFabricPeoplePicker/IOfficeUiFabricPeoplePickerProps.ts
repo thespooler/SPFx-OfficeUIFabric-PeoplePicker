@@ -11,5 +11,6 @@ export interface IOfficeUiFabricPeoplePickerProps {
   principalTypeSecurityGroup: boolean;
   principalTypeDistributionList: boolean;
   numberOfItems: number;
-  onChange?: (items: SharePointUserPersona[]) => void;
+  users?: SharePointUserPersona[];
+  onChange?: (users: SharePointUserPersona[]) => void;
 }

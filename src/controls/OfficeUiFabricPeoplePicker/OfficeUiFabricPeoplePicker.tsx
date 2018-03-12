@@ -38,35 +38,7 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 
 export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricPeoplePickerProps, IOfficeUiFabricPeoplePickerState> {
   private _peopleList;
-  private contextualMenuItems: IContextualMenuItem[] = [
-    {
-      key: 'newItem',
-      icon: 'circlePlus',
-      name: 'New'
-    },
-    {
-      key: 'upload',
-      icon: 'upload',
-      name: 'Upload'
-    },
-    {
-      key: 'divider_1',
-      name: '-',
-    },
-    {
-      key: 'rename',
-      name: 'Rename'
-    },
-    {
-      key: 'properties',
-      name: 'Properties'
-    },
-    {
-      key: 'disabled',
-      name: 'Disabled item',
-      disabled: true
-    }
-  ];
+  
   constructor(props:IOfficeUiFabricPeoplePickerProps, context?: any) {
     super(props, context);
     this._peopleList = [];
@@ -190,7 +162,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
               return batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, {
                 body: userQuery
               })
-              .then((response: SPHttpClientResponse) => response.json())
+              .then(response => response.json())
               .then((json: IEnsureUser) => json);
             });
             
