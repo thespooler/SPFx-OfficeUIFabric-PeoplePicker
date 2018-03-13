@@ -49,31 +49,38 @@ export interface IEnsureUser {
     };
 }
 
+export interface ISPDataUserInfoItem {
+    Department: string;
+    FirstName: string;
+    Id: number;
+    IsSiteAdmin: boolean;
+    JobTitle: string;
+    LastName: string;
+    Name: string;
+    Title: string;
+    UserName: string;
+}
+
 export interface IEnsurableSharePointUser 
     extends IClientPeoplePickerSearchUser, IEnsureUser {}
 
-export class SharePointUserPersona  implements IPersona {
-    private _user:IEnsurableSharePointUser;
-    public get User(): IEnsurableSharePointUser {
-        return this._user;
-    }
-
-    public set User(user: IEnsurableSharePointUser) {
-        this._user = user;
-        this.primaryText = user.Title;
-        this.secondaryText = user.EntityData.Title;
-        this.tertiaryText = user.EntityData.Department;
-        this.imageShouldFadeIn = true;
-        this.imageUrl = `/_layouts/15/userphoto.aspx?size=S&accountname=${this.User.Key.substr(this.User.Key.lastIndexOf('|') + 1)}`;
-    }
-
-    constructor (user: IEnsurableSharePointUser) {
-        this.User = user;
-    }
-
-    public primaryText: string;
-    public secondaryText: string;
-    public tertiaryText: string;
-    public imageUrl: string;
-    public imageShouldFadeIn: boolean;
+export interface ISharePointUserPersona extends IPersonaProps {
+    user: IEnsurableSharePointUser;
 }
+
+export const SharePointUserInfoPersona = (user: ISPDataUserInfoItem) => ({
+    primaryText: user.Title,
+    secondaryText: user.JobTitle,
+    tertiaryText: user.Department,
+    imageShouldFadeIn: true,
+    imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${user.UserName}`
+} as IPersona);
+
+export const SharePointSearchUserPersona = (user: IEnsurableSharePointUser) => ({
+    user: user,
+    primaryText: user.Title,
+    secondaryText: user.EntityData.Title,
+    tertiaryText: user.EntityData.Department,
+    imageShouldFadeIn: true,
+    imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${user.Key.substr(user.Key.lastIndexOf('|') + 1)}`
+} as ISharePointUserPersona);

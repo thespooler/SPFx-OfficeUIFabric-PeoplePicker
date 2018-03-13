@@ -1,34 +1,19 @@
-import * as React from 'react';
-import { IOfficeUiFabricPeoplePickerProps } from './IOfficeUiFabricPeoplePickerProps';
-import {
-  CompactPeoplePicker,
-  IBasePickerSuggestionsProps,
-  NormalPeoplePicker
-} from 'office-ui-fabric-react/lib/Pickers';
-import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
-import {
-  assign,
-  autobind
-} from 'office-ui-fabric-react/lib/Utilities';
-import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
-import { 
-  SPHttpClient, 
-  SPHttpClientBatch, 
-  SPHttpClientResponse } from '@microsoft/sp-http';
-import { 
-  Environment, 
-  EnvironmentType
-} from '@microsoft/sp-core-library';
-import  * as lodash from 'lodash';
-import { 
-  IClientPeoplePickerSearchUser, 
-  IEnsurableSharePointUser,
-  IEnsureUser, 
-  IOfficeUiFabricPeoplePickerState, 
-  SharePointUserPersona } from './OfficeUiFabricPeoplePickerModels';
 import * as strings from 'OfficeUiFabricPeoplePickerStrings';
-import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.Props';
+import React = require('react');
+import { 
+  IOfficeUiFabricPeoplePickerProps, 
+  IOfficeUiFabricPeoplePickerState, 
+  ISharePointUserPersona, 
+  IClientPeoplePickerSearchUser, 
+  SharePointSearchUserPersona, 
+  IEnsurableSharePointUser, 
+  IEnsureUser
+} from '.';
+import { NormalPeoplePicker, IPersonaProps, CompactPeoplePicker, IBasePickerSuggestionsProps, autobind } from 'office-ui-fabric-react';
 import { people } from '../../webparts/officeUiFabricPeoplePicker/PeoplePickerExampleData';
+import { EnvironmentType, Environment } from '@microsoft/sp-core-library';
+import { SPHttpClient, SPHttpClientResponse, SPHttpClientBatch } from '@microsoft/sp-http';
+import * as lodash from 'lodash';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: strings.suggestions,
@@ -45,7 +30,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
     this.state = {
       currentPicker: 1,
       delayResults: false,
-      selectedItems: []
+      selectedItems: props.selectedItems
     };
   }
 
@@ -58,6 +43,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
           getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
           pickerSuggestionsProps={suggestionProps}
           className={'ms-PeoplePicker'}
+          selectedItems={ this.state.selectedItems }
           key={'normal'}
         />
       );
@@ -68,6 +54,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
           onResolveSuggestions={this._onFilterChanged }
           getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
           pickerSuggestionsProps={suggestionProps}
+          selectedItems={ this.state.selectedItems }
           className={'ms-PeoplePicker'}
           key={'normal'}
         />
@@ -143,7 +130,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
         }
       };
 
-      return new Promise<SharePointUserPersona[]>((resolve, reject) =>
+      return new Promise<ISharePointUserPersona[]>((resolve, reject) =>
         this.props.spHttpClient.post(userRequestUrl,
           SPHttpClient.configurations.v1, { body: JSON.stringify(userQueryParams) })
           .then((response: SPHttpClientResponse) => {
@@ -151,14 +138,14 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
           })
           .then((response: {value: string}) => {
             let userQueryResults: IClientPeoplePickerSearchUser[] = JSON.parse(response.value);
-            let persons = userQueryResults.map(p => new SharePointUserPersona(p as IEnsurableSharePointUser));
+            let persons = userQueryResults.map(p => SharePointSearchUserPersona(p as IEnsurableSharePointUser));
             return persons;
           })
           .then((persons) => {
             const batch = this.props.spHttpClient.beginBatch();
             const ensureUserUrl = `${this.props.siteUrl}/_api/web/ensureUser`;
             const batchPromises: Promise<IEnsureUser>[] = persons.map(p => {
-              var userQuery = JSON.stringify({logonName: p.User.Key});
+              var userQuery = JSON.stringify({logonName: p.user.Key});
               return batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, {
                 body: userQuery
               })
@@ -168,12 +155,12 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
             
             var users = batch.execute().then(() => Promise.all(batchPromises).then(values => {
               values.forEach(v => {
-                let userPersona = lodash.find(persons, o => o.User.Key == v.LoginName);
-                if (userPersona && userPersona.User)
+                let userPersona = lodash.find(persons, o => o.user.Key == v.LoginName);
+                if (userPersona && userPersona.user)
                 {
-                  let user = userPersona.User;
+                  let user = userPersona.user;
                   lodash.assign(user, v);
-                  userPersona.User = user;
+                  userPersona.user = user;
                 }
               });
 
