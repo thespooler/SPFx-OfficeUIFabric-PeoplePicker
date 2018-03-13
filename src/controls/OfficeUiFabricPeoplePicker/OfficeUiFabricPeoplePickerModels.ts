@@ -53,13 +53,13 @@ export interface IEnsureUser extends IUserListItem {
 }
 
 export interface ISPDataUserInfoItem extends IUserListItem {
-    Department: string;
-    FirstName: string;
     IsSiteAdmin: boolean;
-    JobTitle: string;
-    LastName: string;
     Name: string;
     UserName: string;
+    Department?: string;
+    FirstName?: string;
+    LastName?: string;
+    JobTitle?: string;
 }
 
 export interface IEnsurableSharePointUser 
