@@ -33,6 +33,11 @@ export interface IClientPeoplePickerSearchUser {
     MultipleMatches: any[];
 }
 
+export interface IUserListItem {
+    Id: number;
+    Title: string;
+}
+
 export interface IEnsureUser extends IUserListItem {
     Email: string;
     IsEmailAuthenticationGuestUser: boolean;
@@ -62,11 +67,6 @@ export interface IEnsurableSharePointUser
 
 export interface ISharePointSearchUserPersona extends IPersonaProps {
     user: IEnsurableSharePointUser;
-}
-
-export interface IUserListItem {
-    Id: number;
-    Title: string;
 }
 
 export interface ISharePointUserPersona extends IPersonaProps {
