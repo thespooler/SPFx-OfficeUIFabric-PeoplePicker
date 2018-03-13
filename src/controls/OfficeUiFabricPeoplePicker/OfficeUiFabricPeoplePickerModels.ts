@@ -33,51 +33,57 @@ export interface IClientPeoplePickerSearchUser {
     MultipleMatches: any[];
 }
 
-export interface IEnsureUser {
+export interface IEnsureUser extends IUserListItem {
     Email: string;
-    Id: number;
     IsEmailAuthenticationGuestUser: boolean;
     IsHiddenInUI: boolean;
     IsShareByEmailGuestUser: boolean;
     IsSiteAdmin: boolean;
     LoginName: string;
     PrincipalType: number;
-    Title: string;
     UserId: {
         NameId: string;
         NameIdIssuer: string;
     };
 }
 
-export interface ISPDataUserInfoItem {
+export interface ISPDataUserInfoItem extends IUserListItem {
     Department: string;
     FirstName: string;
-    Id: number;
     IsSiteAdmin: boolean;
     JobTitle: string;
     LastName: string;
     Name: string;
-    Title: string;
     UserName: string;
 }
 
 export interface IEnsurableSharePointUser 
     extends IClientPeoplePickerSearchUser, IEnsureUser {}
 
-export interface ISharePointUserPersona extends IPersonaProps {
+export interface ISharePointSearchUserPersona extends IPersonaProps {
     user: IEnsurableSharePointUser;
 }
 
+export interface IUserListItem {
+    Id: number;
+    Title: string;
+}
+
+export interface ISharePointUserPersona extends IPersonaProps {
+    user: IUserListItem;
+}
+
 export const SharePointUserInfoPersona = (user: ISPDataUserInfoItem) => ({
+    user,
     primaryText: user.Title,
     secondaryText: user.JobTitle,
     tertiaryText: user.Department,
     imageShouldFadeIn: true,
     imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${user.UserName}`
-} as IPersona);
+} as ISharePointUserPersona);
 
 export const SharePointSearchUserPersona = (user: IEnsurableSharePointUser) => ({
-    user: user,
+    user,
     primaryText: user.Title,
     secondaryText: user.EntityData.Title,
     tertiaryText: user.EntityData.Department,

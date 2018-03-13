@@ -145,7 +145,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
             const batch = this.props.spHttpClient.beginBatch();
             const ensureUserUrl = `${this.props.siteUrl}/_api/web/ensureUser`;
             const batchPromises: Promise<IEnsureUser>[] = persons.map(p => {
-              var userQuery = JSON.stringify({logonName: p.user.Key});
+              var userQuery = JSON.stringify({logonName: (p.user as IEnsurableSharePointUser).Key});
               return batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, {
                 body: userQuery
               })
@@ -155,7 +155,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
             
             var users = batch.execute().then(() => Promise.all(batchPromises).then(values => {
               values.forEach(v => {
-                let userPersona = lodash.find(persons, o => o.user.Key == v.LoginName);
+                let userPersona = lodash.find(persons, o => (o.user as IEnsurableSharePointUser).Key == v.LoginName);
                 if (userPersona && userPersona.user)
                 {
                   let user = userPersona.user;
