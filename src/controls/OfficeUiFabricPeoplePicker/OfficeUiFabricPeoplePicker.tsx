@@ -103,9 +103,6 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
       .then((httpResponse: SPHttpClientResponse) => {
         return httpResponse.json();
       })
-      .then(t => { 
-        return t; 
-      })
       .then((response: {value: string}) => {
         const batch = this.props.spHttpClient.beginBatch();
         let userQueryResults: IClientPeoplePickerSearchUser[] = JSON.parse(response.value);
