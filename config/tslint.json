@@ -37,7 +37,7 @@
       "typedef": false,
       "typedef-whitespace": false,
       "use-named-parameter": true,
-      "valid-typeof": true,
+      "typeof-compare": true,
       "variable-name": false,
       "whitespace": false
     }

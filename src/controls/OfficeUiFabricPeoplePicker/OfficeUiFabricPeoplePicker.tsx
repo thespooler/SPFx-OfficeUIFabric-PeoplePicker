@@ -70,7 +70,7 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
 
   @autobind
   private _onFilterChanged(filterText: string, currentPersonas: IPersonaProps[], limitResults?: number) {
-    if (!filterText || filterText.length < 3) return [];
+    if (!filterText || filterText.length < 3) return Promise.resolve([] as IPersonaProps[]);
 
     return this._searchPeople(filterText);
   }
@@ -101,18 +101,18 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
 
     return this.props.spHttpClient.post(userRequestUrl,
       SPHttpClient.configurations.v1, { body: JSON.stringify(userQueryParams) })
-      .then((response: SPHttpClientResponse) => {
-        return response.json();
+      .then((httpResponse: SPHttpClientResponse) => {
+        return httpResponse.json();
       })
-      .then(({ response: { value } }: { response: { value: string } }) => {
+      .then((response: {value: string}) => {
         const batch = this.props.spHttpClient.beginBatch();
-        let userQueryResults: IClientPeoplePickerSearchUser[] = JSON.parse(value);
+        let userQueryResults: IClientPeoplePickerSearchUser[] = JSON.parse(response.value);
         const batchPromises = userQueryResults.map(p =>
           batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, 
             { 
               body: JSON.stringify({ logonName: p.Key })
             })
-          .then(response => response.json())
+          .then(httpResponse => httpResponse.json())
           .then((user: IEnsureUser) => ({ ...p, ...user } as IEnsurableSharePointUser))
         );
 
