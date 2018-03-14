@@ -69,7 +69,7 @@ export interface ISPDataUserInfoItem extends IUserListItem {
 export interface IEnsurableSharePointUser 
     extends IClientPeoplePickerSearchUser, IEnsureUser {}
 
-export interface ISharePointUserPersona extends IPersonaProps {
+export interface IUserPersona extends IPersonaProps {
     user: IUserListItem;
 }
 
@@ -80,9 +80,7 @@ export const SharePointUserInfoPersona = (user: ISPDataUserInfoItem) => ({
     tertiaryText: user.Department,
     imageShouldFadeIn: true,
     imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${user.UserName}`
-} as ISharePointUserPersona);
-
-
+} as IUserPersona);
 
 export const SharePointSearchUserPersona = (user: IEnsurableSharePointUser) => ({
     user,
@@ -91,4 +89,4 @@ export const SharePointSearchUserPersona = (user: IEnsurableSharePointUser) => (
     tertiaryText: user.EntityData.Department,
     imageShouldFadeIn: true,
     imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${user.Key.substr(user.Key.lastIndexOf('|') + 1)}`
-} as ISharePointUserPersona);
+} as IUserPersona);

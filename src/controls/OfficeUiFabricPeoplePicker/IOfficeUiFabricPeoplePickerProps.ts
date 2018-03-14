@@ -1,6 +1,6 @@
 import { SPHttpClient } from '@microsoft/sp-http';
 import { IPersonaProps } from 'office-ui-fabric-react';
-import { PrincipalType, TypePicker } from '.';
+import { PrincipalType, TypePicker, IUserPersona } from '.';
 
 export interface IOfficeUiFabricPeoplePickerProps {
   spHttpClient: SPHttpClient;
@@ -8,6 +8,6 @@ export interface IOfficeUiFabricPeoplePickerProps {
   typePicker: TypePicker;
   principalType: PrincipalType;
   numberOfItems: number;
-  selectedItems?: IPersonaProps[];
-  onChange?: (users: IPersonaProps[]) => void;
+  selectedItems?: IUserPersona[];
+  onChange?: (users: IUserPersona[]) => void;
 }

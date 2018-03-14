@@ -3,7 +3,6 @@ import React = require('react');
 import {
   IOfficeUiFabricPeoplePickerProps,
   IOfficeUiFabricPeoplePickerState,
-  ISharePointUserPersona,
   IClientPeoplePickerSearchUser,
   SharePointSearchUserPersona,
   IEnsurableSharePointUser,
@@ -103,6 +102,9 @@ export class OfficeUiFabricPeoplePicker extends React.Component<IOfficeUiFabricP
       SPHttpClient.configurations.v1, { body: JSON.stringify(userQueryParams) })
       .then((httpResponse: SPHttpClientResponse) => {
         return httpResponse.json();
+      })
+      .then(t => { 
+        return t; 
       })
       .then((response: {value: string}) => {
         const batch = this.props.spHttpClient.beginBatch();
