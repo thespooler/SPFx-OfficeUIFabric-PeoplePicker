@@ -9,5 +9,5 @@ define([], function() {
     "principalTypeSecurityGroupLabel": "Groupes de securité",
     "principalTypeDistributionListLabel": "Listes de distribution",
     "numberOfItemsFieldLabel": "Nombre d'items à afficher",
-  }
+  };
 });

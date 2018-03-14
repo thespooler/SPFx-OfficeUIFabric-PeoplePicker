@@ -1,33 +1,27 @@
-import * as React from 'react';
+import { BaseClientSideWebPart, IPropertyPaneConfiguration, PropertyPaneDropdown, PropertyPaneToggle, PropertyPaneSlider } from "@microsoft/sp-webpart-base";
+import { Version } from "@microsoft/sp-core-library";
+import { IOfficeUiFabricPeoplePickerWebPartProps } from "./IOfficeUiFabricPeoplePickerWebPartProps";
+import { PrincipalType, IOfficeUiFabricPeoplePickerProps, OfficeUiFabricPeoplePicker, TypePicker } from "../..";
+import React = require("react");
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
-import {
-  BaseClientSideWebPart,
-  IPropertyPaneConfiguration,
-  PropertyPaneDropdown,
-  PropertyPaneToggle,
-  PropertyPaneSlider
-} from '@microsoft/sp-webpart-base';
-
 import * as strings from 'OfficeUiFabricPeoplePickerWebPartStrings';
-import { OfficeUiFabricPeoplePicker } from '../../controls/OfficeUiFabricPeoplePicker/index';
-import { IOfficeUiFabricPeoplePickerProps } from '../../controls/OfficeUiFabricPeoplePicker/index';
-import { IOfficeUiFabricPeoplePickerWebPartProps } from './IOfficeUiFabricPeoplePickerWebPartProps';
 
 export default class OfficeUiFabricPeoplePickerWebPart extends BaseClientSideWebPart<IOfficeUiFabricPeoplePickerWebPartProps> {
 
   public render(): void {
+    let principalType: PrincipalType = PrincipalType.None;
+    principalType |= this.properties.principalTypeUser ? PrincipalType.User : PrincipalType.None;
+    principalType |= this.properties.principalTypeDistributionList ? PrincipalType.DistributionList : PrincipalType.None;
+    principalType |= this.properties.principalTypeSecurityGroup ? PrincipalType.SecurityGroup : PrincipalType.None;
+    principalType |= this.properties.principalTypeSharePointGroup ? PrincipalType.SharePointGroup : PrincipalType.None;
+
     const element: React.ReactElement<IOfficeUiFabricPeoplePickerProps> = React.createElement(
       OfficeUiFabricPeoplePicker,
       {
-        description: this.properties.description,
         spHttpClient: this.context.spHttpClient,
         siteUrl: this.context.pageContext.web.absoluteUrl,
-        typePicker: this.properties.typePicker,
-        principalTypeUser: this.properties.principalTypeUser,
-        principalTypeSharePointGroup: this.properties.principalTypeSharePointGroup,
-        principalTypeSecurityGroup: this.properties.principalTypeSecurityGroup,
-        principalTypeDistributionList: this.properties.principalTypeDistributionList,
+        typePicker: this.properties.typePicker == TypePicker.Compact ? TypePicker.Compact: TypePicker.Normal,
+        principalType: principalType,
         numberOfItems: this.properties.numberOfItems
       }
     );
@@ -36,7 +30,7 @@ export default class OfficeUiFabricPeoplePickerWebPart extends BaseClientSideWeb
   }
 
   protected get dataVersion(): Version {
-    return Version.parse('1.0');
+    return Version.parse('2.0');
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -52,10 +46,10 @@ export default class OfficeUiFabricPeoplePickerWebPart extends BaseClientSideWeb
               groupFields: [
                 PropertyPaneDropdown('typePicker', {
                   label: strings.TypePickerLabel,
-                  selectedKey: "Normal",
+                  selectedKey: TypePicker.Normal,
                   options: [
-                    { key: 'Normal', text: 'Normal' },
-                    { key: 'Compact', text: 'Compact' }
+                    { key: TypePicker.Normal, text: 'Normal' },
+                    { key: TypePicker.Compact, text: 'Compact' }
                   ]
                 }),
                 PropertyPaneToggle('principalTypeUser', {

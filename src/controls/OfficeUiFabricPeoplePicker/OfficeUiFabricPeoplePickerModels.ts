@@ -1,36 +1,40 @@
 import { IPersonaProps, IPersona } from "office-ui-fabric-react";
 
-export interface IOfficeUiFabricPeoplePickerState {
-    currentPicker?: number | string;
-    delayResults?: boolean;
-    selectedItems: any[];
-}
-export interface IPeopleSearchProps {
-    JobTitle: string;
-    PictureURL: string;
-    PreferredName: string;
+export const enum TypePicker {
+    Normal = "Normal",
+    Compact = "Compact"
 }
 
-export interface IUserEntityData {
-    IsAltSecIdPresent: string;
-    ObjectId: string;
-    Title: string;
-    Email: string;
-    MobilePhone: string;
-    OtherMails: string;
-    Department: string;
+export const enum PrincipalType {
+    None                = 0,
+    User                = 1 << 0,
+    DistributionList    = 1 << 1,
+    SecurityGroup       = 1 << 2,
+    SharePointGroup     = 1 << 3,
+}      
+
+export interface IOfficeUiFabricPeoplePickerState {
+    selectedItems: IPersonaProps[];
 }
 
 export interface IClientPeoplePickerSearchUser {
-    Key: string;
     Description: string;
     DisplayText: string;
+    EntityData: {
+        IsAltSecIdPresent: string;
+        ObjectId: string;
+        Title: string;
+        Email: string;
+        MobilePhone: string;
+        OtherMails: string;
+        Department: string;
+    };
     EntityType: string;
+    IsResolved: boolean;
+    Key: string;
+    MultipleMatches: any[];
     ProviderDisplayName: string;
     ProviderName: string;
-    IsResolved: boolean;
-    EntityData: IUserEntityData;
-    MultipleMatches: any[];
 }
 
 export interface IUserListItem {
@@ -65,10 +69,6 @@ export interface ISPDataUserInfoItem extends IUserListItem {
 export interface IEnsurableSharePointUser 
     extends IClientPeoplePickerSearchUser, IEnsureUser {}
 
-export interface ISharePointSearchUserPersona extends IPersonaProps {
-    user: IEnsurableSharePointUser;
-}
-
 export interface ISharePointUserPersona extends IPersonaProps {
     user: IUserListItem;
 }
@@ -82,9 +82,11 @@ export const SharePointUserInfoPersona = (user: ISPDataUserInfoItem) => ({
     imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${user.UserName}`
 } as ISharePointUserPersona);
 
+
+
 export const SharePointSearchUserPersona = (user: IEnsurableSharePointUser) => ({
     user,
-    primaryText: user.Title,
+    primaryText: user.DisplayText,
     secondaryText: user.EntityData.Title,
     tertiaryText: user.EntityData.Department,
     imageShouldFadeIn: true,
