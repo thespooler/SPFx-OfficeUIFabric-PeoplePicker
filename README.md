@@ -17,7 +17,7 @@ SharePoint Framework solution with the Office UI Fabric People Picker, the clien
 
 Solution|Author(s)
 --------|---------
-spfx-react-peoplepicker | Giuliano De Luca ([@giuleon](https://twitter.com/giuleon) , [www.delucagiuliano.com](http://www.delucagiuliano.com))
+spfx-react-peoplepicker | Giuliano De Luca ([@giuleon](https://twitter.com/giuleon) , [www.delucagiuliano.com](http://www.delucagiuliano.com)), Martin Cyr ([metalogique](http://www.metalogique.com))
 
 ## Version history
 
@@ -25,6 +25,8 @@ Version|Date|Comments
 -------|----|--------
 1.0.0|May 21, 2017|Initial release
 1.0.1|Sep 28, 2017|Updated to GA Version, New properties that allow to specify the number of items to display and which entities retrieve (User, SharePoint Groups, Distribution Lists, Security Groups).
+1.0.8|Jan 25, 2018|PeoplePicker component can be re-used stand-alone in other components
+1.0.11|Mar 13, 2018|Support for initial personas to be shown when loaded
 
 ## Disclaimer
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
